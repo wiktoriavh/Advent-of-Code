@@ -14,7 +14,7 @@ const __filename = fileURLToPath(
 const __dirname = dirname(__filename);
 
 const filePath = resolve(__dirname, "../Inputs/10-data.txt");
-const data = readFileSync(filePath).toString();
+const data = readFileSync(filePath, "utf-8");
 
 const adapters = data.split("\n")
   .map(joltage => Number(joltage))
@@ -48,3 +48,7 @@ adapters
 
 const partOne = joltageCount[1] * joltageCount[3];
 console.log(partOne)
+
+/**
+ * Part Two
+ */
