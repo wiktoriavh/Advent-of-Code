@@ -19,14 +19,16 @@ const data = readFileSync(filePath, "utf-8");
 const adapters = data.split("\n")
   .map(joltage => Number(joltage))
   .sort((a, b) => a - b)
-  .map(joltage => {
+  .map((joltage, index) => {
     return {
+      index,
       minJoltage: joltage,
       maxJoltage: joltage + 3
     }
   });
 const lastAdapter = adapters[adapters.length - 1];
 adapters.push({
+  index: adapters.length,
   minJoltage: lastAdapter.minJoltage + 3,
   maxJoltage: lastAdapter.maxJoltage + 3
 });
@@ -35,7 +37,6 @@ adapters.push({
  * Part One
  */
 const joltageCount = [];
-
 adapters
   .slice(0, adapters.length - 1)
   .forEach((adapter, index) => {
@@ -52,3 +53,30 @@ console.log(partOne)
 /**
  * Part Two
  */
+
+const pathWays = [];
+
+function traverse(current) {
+  if(current.index === adapters.length-1) {
+    return 1;
+  }
+  if((current.index in pathWays)) {
+    return pathWays[current.index];
+  }
+  let pathCount = 0;
+
+  adapters
+    .slice(current.index + 1)
+    .filter(adapter => {
+      return current.maxJoltage >= adapter.minJoltage &&
+        current.maxJoltage <= adapter.maxJoltage;
+    })
+    .forEach(adapter => {
+      pathCount += traverse(adapter)
+    });
+  pathWays[current.index] = pathCount;
+  return pathCount;
+}
+
+const partTwo = traverse(adapters[0]);
+console.log(partTwo);
