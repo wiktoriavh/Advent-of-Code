@@ -36,3 +36,5 @@ function partOne(arr) {
 function partTwo(arr){
   
 }
+
+console.log("hello")
