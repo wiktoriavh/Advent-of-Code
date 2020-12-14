@@ -1,6 +1,6 @@
 "use strict";
 
-var _Fetch2 = _interopRequireDefault(require("./Fetch.js"));
+var _Fetch2 = _interopRequireDefault(require("../../../Fetch.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 

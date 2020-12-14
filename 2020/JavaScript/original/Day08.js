@@ -1,4 +1,4 @@
-import Fetch from "./Fetch.js";
+import Fetch from "../../../Fetch.js";
 
 class Day08 extends Fetch {
 
