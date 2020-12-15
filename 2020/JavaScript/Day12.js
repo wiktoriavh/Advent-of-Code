@@ -43,20 +43,21 @@ directions.forEach(dir => {
   const face = movement.facing;
 
   if (dir.direction === "L" || dir.direction === "R") {
+    const turn = dir.direction;
     let steps = 0;
     switch (dir.value) {
       case 90:
-        steps = 1;
+        steps = turn === "R" ? 1 : -1;
         break;
       case 180:
-        steps = 2;
+        steps = turn === "R" ? 2 : -2;
         break;
       case 270:
-        steps = 3;
+        steps = turn === "R" ? 3 : -3;
         break;
     }
     const currentIndex = cardinals.indexOf(face);
-    const newIndex = (currentIndex + steps) >= 4 ? currentIndex + steps - 4 : currentIndex + steps;
+    const newIndex = (currentIndex + steps) >= 4 ? currentIndex + steps - 4 : (currentIndex + steps) < 0 ? currentIndex + steps + 4 : currentIndex + steps;
     const newFace = cardinals[newIndex];
     movement.facing = newFace;
   } else {
@@ -96,10 +97,8 @@ function manhattenDistance(obj) {
 
   const g1 = a1 - b1;
   const g2 = a2 - b2;
-  console.log(g1, g2)
   return Math.abs(g1) + Math.abs(g2);
 }
 
 const taxicab = manhattenDistance(movement);
-console.log(taxicab);
-// 1136, first try
+console.log(taxicab) // 364
