@@ -35,16 +35,13 @@ const movement = {
   "east": 0,
   "south": 0,
   "west": 0,
-  "fasing": "east"
+  "facing": "east"
 };
 const cardinals = ["north", "east", "south", "west"];
 
-const test = [];
-test["north"] = false;
-
-console.log(test)
-
 directions.forEach(dir => {
+  const face = movement.facing;
+
   if (dir.direction === "L" || dir.direction === "R") {
     let steps = 0;
     switch (dir.value) {
@@ -58,12 +55,9 @@ directions.forEach(dir => {
         steps = 3;
         break;
     }
-
-    cardinals.forEach((cardinal, i) => {
-      if (cardinal[1]) {
-
-      }
-    })
-
+    const currentIndex = cardinals.indexOf(face);
+    const newIndex = (currentIndex + steps) >= 4 ? currentIndex + steps - 4 : currentIndex + steps;
+    const newFace = cardinals[newIndex];
+    movement.facing = newFace;
   }
 })
