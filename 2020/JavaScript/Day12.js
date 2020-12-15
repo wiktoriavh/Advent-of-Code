@@ -59,5 +59,25 @@ directions.forEach(dir => {
     const newIndex = (currentIndex + steps) >= 4 ? currentIndex + steps - 4 : currentIndex + steps;
     const newFace = cardinals[newIndex];
     movement.facing = newFace;
+  } else {
+
+    switch (dir.direction) {
+      case "N":
+        movement.north += dir.value;
+        break;
+      case "E":
+        movement.east += dir.value;
+        break;
+      case "S":
+        movement.south += dir.value;
+        break;
+      case "W":
+        movement.west += dir.value;
+        break;
+      case "F":
+        movement[face] += dir.value;
+        break;
+    }
   }
 })
+
