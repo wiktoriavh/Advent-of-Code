@@ -81,3 +81,25 @@ directions.forEach(dir => {
   }
 })
 
+function manhattenDistance(obj) {
+  /**
+   * d(a, b) = (a1 - b1) + (a2 - b2)
+   * also known as taxicab distance. 
+   * Whereas the first group is the x axis and the second group being the y axis,
+   * the sum inside the groups has to be positive.
+   */
+
+  const a1 = obj.north; // y axis
+  const a2 = obj.east;  // x axis
+  const b1 = obj.south; // y axis
+  const b2 = obj.west;  // x axis
+
+  const g1 = a1 - b1;
+  const g2 = a2 - b2;
+  console.log(g1, g2)
+  return Math.abs(g1) + Math.abs(g2);
+}
+
+const taxicab = manhattenDistance(movement);
+console.log(taxicab);
+// 1136, first try
