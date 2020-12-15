@@ -38,7 +38,9 @@ const movement = {
   "facing": "east"
 };
 const cardinals = ["north", "east", "south", "west"];
-
+/**
+ * Part One
+ */
 directions.forEach(dir => {
   const face = movement.facing;
 
@@ -57,7 +59,9 @@ directions.forEach(dir => {
         break;
     }
     const currentIndex = cardinals.indexOf(face);
-    const newIndex = (currentIndex + steps) >= 4 ? currentIndex + steps - 4 : (currentIndex + steps) < 0 ? currentIndex + steps + 4 : currentIndex + steps;
+    const newIndex = (currentIndex + steps) >= 4 ?
+      currentIndex + steps - 4 : (currentIndex + steps) < 0 ?
+      currentIndex + steps + 4 : currentIndex + steps;
     const newFace = cardinals[newIndex];
     movement.facing = newFace;
   } else {
@@ -91,9 +95,9 @@ function manhattenDistance(obj) {
    */
 
   const a1 = obj.north; // y axis
-  const a2 = obj.east;  // x axis
+  const a2 = obj.east; // x axis
   const b1 = obj.south; // y axis
-  const b2 = obj.west;  // x axis
+  const b2 = obj.west; // x axis
 
   const g1 = a1 - b1;
   const g2 = a2 - b2;
@@ -101,4 +105,86 @@ function manhattenDistance(obj) {
 }
 
 const taxicab = manhattenDistance(movement);
-console.log(taxicab) // 364
+console.log("Part One: " + taxicab) // 364
+
+/**
+ * Part Two
+ */
+const ship = {
+  "north": 0,
+  "east": 0,
+  "south": 0,
+  "west": 0,
+};
+
+const waypoint = {
+  "north": 1,
+  "east": 10,
+  "south": 0,
+  "west": 0,
+}
+console.log(ship)
+directions.forEach(dir => {
+  const move = dir.direction;
+  const val = dir.value;
+
+  switch (move) {
+    case "N":
+      return waypoint.north += val;
+    case "E":
+      return waypoint.east += val;
+    case "S":
+      return waypoint.south += val;
+    case "W":
+      return waypoint.west += val;
+  }
+
+  if (move === "R" || move === "L") {
+    let steps = 0;
+    switch (dir.value) {
+      case 90:
+        steps = move === "R" ? 1 : -1;
+        break;
+      case 180:
+        steps = move === "R" ? 2 : -2;
+        break;
+      case 270:
+        steps = move === "R" ? 3 : -3;
+        break;
+    }
+
+    const keys = Object.keys(waypoint);
+    const vals = Object.values(waypoint);
+    let newVals = [];
+
+    vals.forEach((value, i) => {
+      const x = (i + steps) >= 4 ?
+        (i + steps) - 4 : (i + steps) < 0 ?
+        (i + steps) + 4 : (i + steps);
+      newVals[x] = value;
+    })
+
+    for (let j = 0; j < keys.length; j++) {
+      waypoint[keys[j]] = newVals[j];
+    }
+  }
+
+  if (move === "F") {
+    const vals = Object.values(waypoint);
+    let multiplyWaypointValue = [];
+
+    vals.forEach(value => {
+      const multiplied = value * val;
+      multiplyWaypointValue.push(multiplied);
+    })
+
+    const shipKeys = Object.keys(ship);
+
+    for (let a = 0; a < shipKeys.length; a++) {
+      ship[shipKeys[a]] = multiplyWaypointValue[a];
+    }
+  }
+});
+
+const taxicabTwo = manhattenDistance(ship);
+console.log(taxicabTwo); // 740, wrong answer
