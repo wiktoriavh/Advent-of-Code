@@ -10,15 +10,17 @@
     "outDir": "dist",
     "strict": true,
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "typeRoots": ["./node_modules/@types"],
+    "types": ["node"],
     "esModuleInterop": true,
+    "lib": ["esnext"],
   },
   "include": [
-    "2021/**/*.ts",
+    "**/*.ts",
   ],
   "exclude": [
-    "node_modules", "jest.config.ts", "test/full-name-parser.test.ts", "*.old.ts"
+    "node_modules"
   ],
 }
