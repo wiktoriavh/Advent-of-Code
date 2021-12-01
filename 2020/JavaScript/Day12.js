@@ -109,6 +109,7 @@ console.log("Part One: " + taxicab) // 364
 
 /**
  * Part Two
+ * First try
  */
 const ship = {
   "north": 0,
@@ -123,7 +124,7 @@ const waypoint = {
   "south": 0,
   "west": 0,
 }
-console.log(ship)
+
 directions.forEach(dir => {
   const move = dir.direction;
   const val = dir.value;
@@ -187,4 +188,42 @@ directions.forEach(dir => {
 });
 
 const taxicabTwo = manhattenDistance(ship);
-console.log(taxicabTwo); // 740, wrong answer
+// console.log(taxicabTwo); // 740, wrong answer
+
+/**
+ * Part Two
+ * Second try
+ */
+
+const shipCoord = {
+  pos: {
+    x: 0,
+    y: 0,
+  },
+  dir: {
+    x: 1,
+    y: 0,
+  }
+}
+
+const waypointCoord = {
+  x: 10,
+  y: 1
+}
+
+const actions = {
+  N() {},
+  E() {},
+  S() {},
+  W() {},
+  F() {},
+  L() {},
+  R() {},
+}
+
+function navigate(instructions) {
+
+  instructions.forEach(instruction => {
+    const action = actions[instruction.direction]
+  })
+}
