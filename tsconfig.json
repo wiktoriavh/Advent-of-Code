@@ -1,0 +1,24 @@
+{
+  "extends": "ts-node/node12/tsconfig.json",
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+  },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    // "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types"],
+    "esModuleInterop": true,
+  },
+  "include": [
+    "2021/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules", "jest.config.ts", "test/full-name-parser.test.ts", "*.old.ts"
+  ],
+}
