@@ -1,4 +1,4 @@
-import { getData } from "./getData";
+import { getData } from "../../getData";
 
 const DATA = getData(2);
 const data = DATA.split("\r\n");
