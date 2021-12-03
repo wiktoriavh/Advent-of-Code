@@ -4,4 +4,4 @@
 
 ---
 
-![](https://img.shields.io/badge/2020%20📅-orange) ![](https://img.shields.io/badge/⭐-18-yellow) ![](https://img.shields.io/badge/completed-2-red)
+![](https://img.shields.io/badge/2020%20📅-orange) ![](https://img.shields.io/badge/2020%20⭐-18-yellow) ![](https://img.shields.io/badge/2020%20completed-2-red)
