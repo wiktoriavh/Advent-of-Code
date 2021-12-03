@@ -1,0 +1,26 @@
+name: Update AoC Badges 2020 🎄
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "2020/*.ts"
+      - "2020/*.js"
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: joblo2213/aoc-badges-action@v3
+        with:
+          userid: ${{ secrets.USER_ID }}
+          session: ${{ secrets.SESSION_ID }}
+          year: 2020
+          leaderboard: "https://adventofcode.com/2020/leaderboard/private/view/1105641.json"
+          file: "README.md"
+          starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/2020%20⭐-)[0-9]+(?=-yellow)'
+          daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/2020%20completed-)[0-9]+(?=-red)'
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        name: Push
+        with:
+          commit_message: Update 2020 badges ⭐
+          file_pattern: README.md
