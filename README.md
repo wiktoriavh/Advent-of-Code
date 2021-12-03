@@ -1,5 +1,17 @@
 # Advent of Code
 
+```
+      *
+    .'o'.
+    .o.'.
+   .'.'o'.
+  o'.o.'.o.
+ .'.o.'.'.o.
+.o.'.o.'.o.'.
+     |*|
+  _ _|*|_ _
+```
+
 ![](https://img.shields.io/badge/2021%20📅-3-blue) ![](https://img.shields.io/badge/stars%20⭐-5-yellow) ![](https://img.shields.io/badge/days%20completed-2-red)
 
 ---
