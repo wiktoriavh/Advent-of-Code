@@ -1,4 +1,4 @@
-name: Update AoC Badges 🎄
+name: Update AoC Badges 2021 🎄
 on:
   schedule:
     - cron: "6 5 1-25 12 *"
