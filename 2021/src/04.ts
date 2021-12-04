@@ -2,12 +2,7 @@ import { getData } from "../../getData";
 const DATA = getData(2021, 4);
 const data = DATA.split(/\r\n\r\n/);
 
-const numbers = data[0].split(",").map(Number);
-const boardsWithRows = data.slice(1).map((item) => {
-  const row = item.split("\r\n");
-  const num = row.map((piece) => piece.trim().split(/\s+/));
-  return num.map((piece) => piece.map(Number));
-});
+const list = data[0].split(",").map(Number);
 const boards = data.slice(1).map((item) => {
   return item.trim().split(/\s+/).map(Number);
 });
@@ -17,35 +12,56 @@ const boards = data.slice(1).map((item) => {
  * Part 1
  */
 
-const bingoCards: (string | number)[][] = [...boards];
-let bingoBoard = -1;
-let loopAmount = 99;
-loopBoards: for (let j = 0; j < bingoCards.length; j++) {
-  for (let i = 0; i < numbers.length; i++) {
-    const number = numbers[i];
-    bingoCards[j].forEach((item, index) => {
-      if (item === number) {
-        bingoCards[j][index] = "X";
-      }
-    });
+function checkForBingo(
+  numbers: number[],
+  cards: number[][],
+  shouldWin: boolean = true
+) {
+  const bingoCards: (string | number)[][] = [...cards];
+  let bingoBoard: number = -1;
+  let loopAmount = [];
+  let wantedLoopAmount: number = -1;
+  loopBoards: for (let j = 0; j < bingoCards.length; j++) {
+    for (let i = 0; i < numbers.length; i++) {
+      const number = numbers[i];
+      bingoCards[j].forEach((item, index) => {
+        if (item === number) {
+          bingoCards[j][index] = "X";
+        }
+      });
 
-    const isBingo = checkBoardForBingo(bingoCards[j]);
-    if (isBingo) {
-      if (loopAmount > i) {
-        loopAmount = i;
-        bingoBoard = j;
+      const isBingo = checkBoardForBingo(bingoCards[j]);
+
+      if (isBingo) {
+        loopAmount.push(i);
+
+        if (shouldWin && wantedLoopAmount > i) {
+          bingoBoard = j;
+        }
+        if (!shouldWin && wantedLoopAmount < i) {
+          bingoBoard = j;
+        }
+        wantedLoopAmount = shouldWin
+          ? Math.min(...loopAmount)
+          : Math.max(...loopAmount);
+
+        continue loopBoards;
       }
-      continue loopBoards;
     }
   }
-}
 
-const sum: number = bingoCards[bingoBoard].reduce((acc, curr): number => {
-  if (typeof curr === "number") {
-    return acc + curr;
-  }
-  return acc;
-}, 0);
+  const sum: number = bingoCards[bingoBoard].reduce<number>(
+    (acc, curr): number => {
+      if (typeof curr === "number") {
+        return acc + curr;
+      }
+      return acc;
+    },
+    0
+  );
+
+  return sum * numbers[wantedLoopAmount];
+}
 
 function checkBoardForBingo(board: (string | number)[]) {
   const bingoHash: { [key: string]: number } = {};
@@ -67,4 +83,15 @@ function checkBoardForBingo(board: (string | number)[]) {
   return false;
 }
 
-console.log(sum * numbers[loopAmount]); // Solution
+const solution1 = checkForBingo(list, boards, true);
+console.log("Part 1:", solution1);
+
+/**
+ * Part 2
+ */
+
+const cards = data.slice(1).map((item) => {
+  return item.trim().split(/\s+/).map(Number);
+});
+const solution2 = checkForBingo(list, cards, false);
+console.log("Part 2:", solution2);
