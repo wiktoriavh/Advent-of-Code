@@ -12,88 +12,59 @@ const boards = data.slice(1).map((item) => {
   return item.trim().split(/\s+/).map(Number);
 });
 
-let quickestWinnerBoardIndex = -1;
-let leastAmountOfTries = 999;
-let resetBingoBoard: BingoBoard = {
-  x0: [],
-  x1: [],
-  x2: [],
-  x3: [],
-  x4: [],
-  y0: [],
-  y1: [],
-  y2: [],
-  y3: [],
-  y4: [],
-};
+/**
+ * Original Attempt
+ * Part 1
+ */
 
-type BingoBoard = {
-  [key: string]: number[];
-};
-
-boards.forEach((board, boardIndex) => {
-  let bingoBoard = { ...resetBingoBoard };
-  numbersLoop: for (
-    let numbersIndex = 0;
-    numbersIndex < numbers.length;
-    numbersIndex++
-  ) {
-    const number = numbers[numbersIndex];
-    const update = checkBoardForNumber(board, number, bingoBoard);
-    if (!update) {
-      continue;
-    }
-    bingoBoard = update;
-    for (let key in bingoBoard) {
-      if (bingoBoard[key].length === 5) {
-        if (numbersIndex < leastAmountOfTries) {
-          // console.log(number, leastAmountOfTries, numbersIndex);
-          // console.log(number, numbers[numbersIndex]);
-          quickestWinnerBoardIndex = boardIndex;
-          leastAmountOfTries = numbersIndex;
-          // console.log(bingoBoard);
-        }
-        break numbersLoop;
+const bingoCards: (string | number)[][] = [...boards];
+let bingoBoard = -1;
+let loopAmount = 99;
+loopBoards: for (let j = 0; j < bingoCards.length; j++) {
+  for (let i = 0; i < numbers.length; i++) {
+    const number = numbers[i];
+    bingoCards[j].forEach((item, index) => {
+      if (item === number) {
+        bingoCards[j][index] = "X";
       }
+    });
+
+    const isBingo = checkBoardForBingo(bingoCards[j]);
+    if (isBingo) {
+      if (loopAmount > i) {
+        loopAmount = i;
+        bingoBoard = j;
+      }
+      continue loopBoards;
     }
   }
-});
+}
 
-function checkBoardForNumber(
-  board: number[],
-  number: number,
-  bingoBoard: BingoBoard
-) {
-  const indexOfNumber = board.indexOf(number);
-
-  if (indexOfNumber === -1) {
-    return;
+const sum: number = bingoCards[bingoBoard].reduce((acc, curr): number => {
+  if (typeof curr === "number") {
+    return acc + curr;
   }
-  const y = Math.floor(indexOfNumber / 5);
-  const x = indexOfNumber % 5;
+  return acc;
+}, 0);
 
-  const update = {
-    ...bingoBoard,
-    [`x${x}`]: [...bingoBoard[`x${x}`], number],
-    [`y${y}`]: [...bingoBoard[`y${y}`], number],
-  };
+function checkBoardForBingo(board: (string | number)[]) {
+  const bingoHash: { [key: string]: number } = {};
 
-  return update;
+  board.forEach((item, i) => {
+    if (item === "X") {
+      const x = Math.floor(i / 5);
+      const y = i % 5;
+      bingoHash[`x${x}`] = bingoHash[`x${x}`] ? bingoHash[`x${x}`] + 1 : 1;
+      bingoHash[`y${y}`] = bingoHash[`y${y}`] ? bingoHash[`y${y}`] + 1 : 1;
+    }
+  });
+
+  for (let key in bingoHash) {
+    if (bingoHash[key] === 5) {
+      return true;
+    }
+  }
+  return false;
 }
 
-const markedNumbers: number[] = [];
-const unmarkedNumbers = [...boards[quickestWinnerBoardIndex]];
-for (let i = 0; i <= leastAmountOfTries; i++) {
-  markedNumbers.push(numbers[i]);
-  const unmarkedIndex = unmarkedNumbers.indexOf(numbers[i]);
-  unmarkedNumbers.splice(unmarkedIndex, 1);
-}
-console.log(unmarkedNumbers.length + markedNumbers.length);
-
-const lastCalledNumber = numbers[leastAmountOfTries];
-const sumUnmarkedNumbers = unmarkedNumbers.reduce((acc, curr) => acc + curr);
-
-console.log(sumUnmarkedNumbers * lastCalledNumber); // should be solution
-// console.log(unmarkedNumbers);
-// console.log(boards[quickestWinnerBoardIndex].length);
-// console.log(markedNumbers.length + unmarkedNumbers.length);
+console.log(sum * numbers[loopAmount]); // Solution
