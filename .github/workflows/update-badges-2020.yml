@@ -2,8 +2,8 @@ name: Update AoC Badges 2020 🎄
 on:
   push:
     paths:
-      - "2020/*.ts"
-      - "2020/*.js"
+      - "2020/src/*.ts"
+      - "2020/src/*.js"
 jobs:
   update:
     runs-on: ubuntu-latest

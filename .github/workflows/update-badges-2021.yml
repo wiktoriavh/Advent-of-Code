@@ -4,7 +4,7 @@ on:
     - cron: "6 5 1-25 12 *"
   push:
     paths:
-      - "2021/*.ts"
+      - "2021/src/*.ts"
 jobs:
   update:
     runs-on: ubuntu-latest
