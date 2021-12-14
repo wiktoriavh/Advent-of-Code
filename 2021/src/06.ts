@@ -27,7 +27,7 @@ const update = [];
     return populateFishes(update, days - 1);
 }
 
-// console.log(populateFishes(data, 80));
+console.log(populateFishes(data, 80));
 
 /**
  * Part 2
@@ -60,40 +60,35 @@ function createObject(fishes: number []): {[key:string]:number} {
     return obj;
 }
 
-const fishTimer = createObject(data);
-const testTimer = createObject(test);
-
-function growFishPopulation(fishes: {[key:string]:number}, days: number): number {
- 
-    console.log(fishes);
+function growFishPopulation(fishes: number[], days: number): number {
+ let school = createObject(fishes);
 
     let countdown = days;
-    let update: {[key:string]:number} = {...fishes};
 
     while (countdown > 0) {
-        const group = {...update}
-        for (let key in group) {
-            if (Number(key) - 1 === -1) {
-                group["6"] = group["6"] ? group["6"] + update[key] + 1 : update[key] + 1;
-                group["8"] = group["8"] ? group["8"] + 1 : 1;
-            } else {
-                group[Number(key) - 1] = group[Number(key) - 1] ? group[Number(key) - 1] + update[key] : update[key];
-            }
-
+        school = {
+            0: school["1"],
+            1: school["2"],
+            2: school["3"],
+            3: school["4"],
+            4: school["5"],
+            5: school["6"],
+            6: school["7"] + school["0"],
+            7: school["8"],
+            8: school["0"],
         }
-        update = {...group};
         countdown--;
     }
+    
     let count = 0;
-    for (let key in update) {
-        count += update[key];
+    for (let key in school) {
+        count += school[key];
     }
-
-console.log(count);
+    return count;
 }
 
 
-const solutionTest2 = growFishPopulation(testTimer, 256);
-console.log(solutionTest2, expectedTest2);
+const solutionTest2 = growFishPopulation(data, 256);
+console.log(solutionTest2);
 
 
