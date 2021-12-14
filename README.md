@@ -12,7 +12,7 @@
   _ _|*|_ _
 ```
 
-![](https://img.shields.io/badge/2021%20📅-13-blue) ![](https://img.shields.io/badge/stars%20⭐-11-yellow) ![](https://img.shields.io/badge/days%20completed-5-red)
+![](https://img.shields.io/badge/2021%20📅-14-blue) ![](https://img.shields.io/badge/stars%20⭐-11-yellow) ![](https://img.shields.io/badge/days%20completed-5-red)
 
 ---
 
