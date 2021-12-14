@@ -25,3 +25,18 @@ function calculateCrabBeamFuel(crabs: Crabs) {
 
 const beamFuel = calculateCrabBeamFuel(data);
 console.log(beamFuel);
+
+/**
+ * Part 2
+ */
+
+const exampleSolution2 = 168;
+
+function crabEngineering(crabs: Crabs) {
+    const sorted = crabs.sort((a, b) => a - b);
+    const pointer = Math.floor((sorted.length - 1) / 2);
+    const median = sorted[pointer];
+    
+
+    return fuel;
+}
