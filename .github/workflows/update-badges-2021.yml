@@ -1,7 +1,5 @@
 name: Update AoC Badges 2021 🎄
 on:
-  schedule:
-    - cron: "6 5 1-25 12 *"
   push:
     paths:
       - "2021/src/*.ts"
