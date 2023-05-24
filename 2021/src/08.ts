@@ -58,6 +58,47 @@ function countUniqueDigits(input: Data) {
 const part1Solution = countUniqueDigits(data);
 console.log(part1Solution);
 
+/**
+ * Part 2
+ */
+
+const solutionExample2 = 61229;
+
+function sortPattern(pattern: string[]) {
+  return pattern.sort((a, b) => a.length - b.length);
+}
+
+const uniqueDigitPlacement = {
+  1: ["topRight", "bottomRight"],
+  4: ["topLeft", "middle", "topRight", "bottomRight"],
+  7: ["top", "topRight", "bottomRight"],
+};
+
+function addOuputNumbers(input: Data) {
+  let sum = 0;
+  for (let i = 0; i < input.length; i++) {
+    const display = {
+      top: [],
+      middle: [],
+      bottom: [],
+      topLeft: [],
+      topRight: [],
+      bottomLeft: [],
+      bottomRight: [],
+    };
+    const { output, pattern } = input[i];
+    const sortedPattern = sortPattern(pattern);
+    const num = digits[sortedPattern[0].length];
+  }
+  return sum;
+}
+
+const part2Solution = addOuputNumbers(data);
+
+/**
+ * Types
+ */
+
 type Pattern = [
   string,
   string,
